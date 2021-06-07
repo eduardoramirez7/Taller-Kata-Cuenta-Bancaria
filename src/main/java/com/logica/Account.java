@@ -6,33 +6,33 @@ import java.util.ArrayList;
 
 public class Account {
 
-    private long saldo; // retiro o deposito
-    private long balanceTotal = 0; //total en la cuenta
+    private long saldo;
+    private long balanceTotal = 0;
     private LocalDate fecha;
 
     ArrayList<Account> mov = new ArrayList<>();
 
-    public long getSaldo() {
+    public long obtenerSaldo() {
         return saldo;
     }
 
-    public void setSaldo(long saldo) {
+    public void recibirSaldo(long saldo) {
         this.saldo = saldo;
     }
 
-    public LocalDate getFecha() {
+    public LocalDate obtenerFecha() {
         return fecha;
     }
 
-    public void setFecha(LocalDate fecha) {
+    public void definirFechaMovimiento(LocalDate fecha) {
         this.fecha = fecha;
     }
 
-    public long getBalanceTotal() {
+    public long obtenerBalanceTotal() {
         return balanceTotal;
     }
 
-    public void setBalanceTotal(long balanceTotal) {
+    public void definirBalanceTotal(long balanceTotal) {
         this.balanceTotal = balanceTotal;
     }
 
@@ -41,9 +41,9 @@ public class Account {
 
     public void deposito(long monto, String fechaDeposito) {
         Account c = new Account();
-        c.setSaldo(monto);
-        c.setFecha(formatoFecha(fechaDeposito));
-        c.setBalanceTotal(this.balanceTotal+=monto);
+        c.recibirSaldo(monto);
+        c.definirFechaMovimiento(formatoFecha(fechaDeposito));
+        c.definirBalanceTotal(this.balanceTotal+=monto);
         mov.add(c);
     }
 
@@ -55,11 +55,10 @@ public class Account {
     public void extractoBancario() {
         System.out.println("   Fecha        Movimiento       Balance");
         for(int i = 0; i< mov.size(); i++) {
-            this.saldo += mov.get(i).getSaldo();
-            System.out.println(mov.get(i).getFecha() + "        " + mov.get(i).getSaldo()+"           "+mov.get(i).getBalanceTotal());
+            this.saldo += mov.get(i).obtenerSaldo();
+            System.out.println(mov.get(i).obtenerFecha() + "        " + mov.get(i).obtenerSaldo()+"           "+mov.get(i).obtenerBalanceTotal());
         }
     }
-
 
     public LocalDate formatoFecha(String fecha){
 
@@ -68,11 +67,11 @@ public class Account {
         return fechaLocal;
     }
 
-
     private boolean saldoTotal(long monto){
         long balance = this.balanceTotal - monto;
         if(balance >= 0)
             return true;
         return false;
     }
+
 }
