@@ -6,7 +6,8 @@ import java.util.ArrayList;
 
 public class Account {
 
-    private long saldo = 0;
+    private long saldo; // retiro o deposito
+    private long balanceTotal = 0; //total en la cuenta
     private LocalDate fecha;
 
     ArrayList<Account> mov = new ArrayList<>();
@@ -27,14 +28,22 @@ public class Account {
         this.fecha = fecha;
     }
 
-    public Account() {
+    public long getBalanceTotal() {
+        return balanceTotal;
     }
 
+    public void setBalanceTotal(long balanceTotal) {
+        this.balanceTotal = balanceTotal;
+    }
+
+    public Account() {
+    }
 
     public void deposito(long monto, String fechaDeposito) {
         Account c = new Account();
         c.setSaldo(monto);
         c.setFecha(formatoFecha(fechaDeposito));
+        c.setBalanceTotal(this.balanceTotal+=monto);
         mov.add(c);
     }
 
@@ -47,7 +56,7 @@ public class Account {
         System.out.println("   Fecha        Movimiento       Balance");
         for(int i = 0; i< mov.size(); i++) {
             this.saldo += mov.get(i).getSaldo();
-            System.out.println(mov.get(i).getFecha() + "        " + mov.get(i).getSaldo());
+            System.out.println(mov.get(i).getFecha() + "        " + mov.get(i).getSaldo()+"           "+mov.get(i).getBalanceTotal());
         }
     }
 
@@ -59,16 +68,10 @@ public class Account {
         return fechaLocal;
     }
 
-    private long calcularSaldo(){
-
-        for(int i = 0; i< mov.size(); i++)
-            this.saldo += mov.get(i).getSaldo();
-        return this.saldo;
-    }
 
     private boolean saldoTotal(long monto){
-        long balance = this.saldo - monto;
-        if(balance > 0)
+        long balance = this.balanceTotal - monto;
+        if(balance >= 0)
             return true;
         return false;
     }

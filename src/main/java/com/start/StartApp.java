@@ -13,6 +13,7 @@ public class StartApp {
         cuenta.deposito(20000, "01/10/2021");
         cuenta.deposito(30000, "01/10/2021");
         cuenta.retiro(50000, "12/12/2021");
+        cuenta.retiro(10000, "12/12/2022");
         cuenta.extractoBancario();
     }
 
